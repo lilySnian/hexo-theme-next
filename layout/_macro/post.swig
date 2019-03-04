@@ -1,4 +1,4 @@
-{% macro render(post, is_index, post_extra_class) %}
+{% macro render(post, is_index, is_pv, post_extra_class) %}
 
   {% set headlessPost = Array.prototype.indexOf.call(['quote', 'picture'], post.type) > -1 %}
 
@@ -220,6 +220,11 @@
             </span>
           {% endif %}
 
+			{% if is_pv %}
+			  <span class="post-meta-divider">|</span>
+			  <span id="busuanzi_value_page_pv"></span>次阅读
+			{% endif %}
+
           {% if theme.post_wordcount.wordcount or theme.post_wordcount.min2read %}
             <div class="post-wordcount">
               {% if theme.post_wordcount.wordcount %}
@@ -352,6 +357,14 @@
       </div>
     {% endif %}
 
+	<!--配置文章结束模板-->
+	<div>
+      {% if not is_index %}
+        {% include 'passage-end-tag.swig' %}
+      {% endif %}
+    </div>
+	<!--配置文章结束模板-->
+	
     <footer class="post-footer">
       {% if post.tags and post.tags.length and not is_index %}
         <div class="post-tags">
